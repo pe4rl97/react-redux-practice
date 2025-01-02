@@ -1,18 +1,20 @@
-import { Provider } from 'react-redux'
 import './App.css'
-import store from './store/store'
+import Bank from './components/Bank'
+import Chat from './components/Chat'
 import Login from './components/Login'
 
 function App() {
     
     return (
         <>
-            <Provider store={store}>
-                <div>
-                    <h1>React-Redux Login App</h1>
-                    <Login/>
-                </div>
-            </Provider>
+            <div className='container-md'>
+                <h1 className='my-3'>React-Redux Practice</h1>
+                <Bank/>
+                <Login/>
+                <Chat/>
+                <br/>
+            </div>
+            
         </>
     )
 }

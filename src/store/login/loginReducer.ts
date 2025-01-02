@@ -1,21 +1,13 @@
-import { LOGIN, LOGOUT } from "./actionTypes";
+import { Action } from "./actions";
+import { ActionTypes } from "./actionTypes";
 
-export interface StateInterface {
-    loggedInUsers: string[]
-}
+const initalState : string[] = [];
 
-export interface ActionInterface {
-    type: string;
-    payload: {
-        username: string
-    }
-}
-
-export const loginReducer = (state = [], action: ActionInterface) => {
+export const loginReducer = (state : string[] = initalState, action: Action) => {
     switch (action.type) {
-        case LOGIN:
+        case ActionTypes.LOGIN:
             return [...state, action.payload.username];
-        case LOGOUT:
+        case ActionTypes.LOGOUT:
             return state.filter((user) => user !== action.payload.username);
         default: 
             return state;

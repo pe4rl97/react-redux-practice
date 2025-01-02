@@ -1,17 +1,18 @@
-import { useState } from "react"
+import { useState } from "react";
 import { connect } from "react-redux";
-import { login, logout } from "../store/login/actions";
+import { login, logout } from "../store/login/actionCreators";
 import { AppDispatch, RootState } from "../store/store";
-import { ActionInterface } from "../store/login/loginReducer";
+import { Button, Col, Form, ListGroup, Row } from "react-bootstrap";
 
 interface PropsInterface {
-    loggedInUsers: RootState;
-    login: (username: string) => ActionInterface;
-    logout: (username: string) => ActionInterface; 
+    loggedInUsers: string[];
+    login: (username: string) => void;
+    logout: (username: string) => void; 
 }
 
 const Login = ({ loggedInUsers, login, logout } : PropsInterface) => {
     const [username, setUsername] = useState<string>('');
+    const [errorMessage, setErrorMessage] = useState<string>('');
 
     const handleLogin = () : void => {
         if (username && !loggedInUsers.includes(username)) {
@@ -24,34 +25,45 @@ const Login = ({ loggedInUsers, login, logout } : PropsInterface) => {
         if (loggedInUsers.includes(username)) {
             logout(username);
             setUsername('');
+        } else {
+            setErrorMessage('User doesn\'t exists')
         }
     }
     return (
         <div>
-            <h2>Login</h2>
-            <input
-                type="text"
-                placeholder="Enter username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-            />
+            <h2 className="my-3">Login</h2>
+            <Row>
+                <Col md='5'>
+                    <Form.Control
+                        type="text"
+                        placeholder="Enter username"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                    />
+                </Col>
+            </Row>
             {' '}
-            <button onClick={handleLogin}>Login</button>
-            {' '}
-            <button onClick={handleLogout}>Logout</button>
+            <Button variant="secondary" onClick={handleLogin}>Login</Button>
+            {' '} 
+            <Button variant="secondary" className="my-3 mx-3" onClick={handleLogout}>Logout</Button>
+            <span className="text-danger">{errorMessage}</span>
             <div>
-                <h3>Logged In Users:</h3>
-                <ul>
-                    {loggedInUsers.map((user : string, index: number) => (
-                        <li key={index}>{user}</li>
-                    ))}
-                </ul>
+                <h4>Logged In Users:</h4>
+                <ListGroup as={'ul'}>
+                    <Row>
+                        <Col md='5'>
+                            {loggedInUsers.map((user : string, index: number) => (
+                                <ListGroup.Item key={index}>{user}</ListGroup.Item>
+                            ))}
+                        </Col>
+                    </Row>
+                </ListGroup>
             </div>
         </div>
     )
 }
 
-const mapStateToProps = (state: { loggedInUsers: string }) => ({
+const mapStateToProps = (state: RootState) => ({
     loggedInUsers: state.loggedInUsers,
 });
 

@@ -1,11 +1,17 @@
-import { LOGIN, LOGOUT } from "./actionTypes";
+import { ActionTypes } from "./actionTypes";
 
-export const login = (username: string) => ({
-    type: LOGIN,
-    payload: {username},
-})
+interface LoginAction {
+    type: ActionTypes.LOGIN,
+    payload: {
+        username: string
+    }
+}
 
-export const logout = (username: string) => ({
-    type: LOGOUT,
-    payload: {username},
-})
+interface LogoutAction {
+    type: ActionTypes.LOGOUT,
+    payload: {
+        username: string
+    }
+}
+
+export type Action = LoginAction | LogoutAction;
