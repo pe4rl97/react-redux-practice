@@ -16,6 +16,7 @@ const Login = ({ loggedInUsers, login, logout } : PropsInterface) => {
 
     const handleLogin = () : void => {
         if (username && !loggedInUsers.includes(username)) {
+            setErrorMessage('');
             login(username);
             setUsername('');
         }
@@ -23,6 +24,7 @@ const Login = ({ loggedInUsers, login, logout } : PropsInterface) => {
 
     const handleLogout = () : void => {
         if (loggedInUsers.includes(username)) {
+            setErrorMessage('');
             logout(username);
             setUsername('');
         } else {
@@ -46,7 +48,7 @@ const Login = ({ loggedInUsers, login, logout } : PropsInterface) => {
             <Button variant="secondary" onClick={handleLogin}>Login</Button>
             {' '} 
             <Button variant="secondary" className="my-3 mx-3" onClick={handleLogout}>Logout</Button>
-            <span className="text-danger">{errorMessage}</span>
+            {errorMessage && <span className="text-danger">{errorMessage}</span>}
             <div>
                 <h4>Logged In Users:</h4>
                 <ListGroup as={'ul'}>

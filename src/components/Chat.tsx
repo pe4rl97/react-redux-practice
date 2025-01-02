@@ -18,6 +18,7 @@ const Chat = () => {
 
     const handleSendMessage = () => {
         if (loggedInUsers.includes(sender)) {
+            setErrorMessage('');
             sendMessage(sender, message);
             setMessage('');
         } else {
@@ -53,7 +54,7 @@ const Chat = () => {
                 </Col>
             </Row>
             <Button variant="secondary" className="my-2" onClick={handleSendMessage} disabled={!sender || !message}>Send Message</Button>
-            <p className="text-danger">{errorMessage}</p>
+            {errorMessage && <p className="text-danger">{errorMessage}</p>}
         </>
     )
 }
